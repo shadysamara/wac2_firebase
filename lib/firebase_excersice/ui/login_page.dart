@@ -1,36 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/firebase_helper.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/firestore_helper.dart';
+import 'package:wac2_firebase/firebase_excersice/providers/auth_provider.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/register_page.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/widgets/custom_textfield.dart';
 import 'package:wac2_firebase/firebase_excersice/utilities/routers.dart';
 
 class LoginScreen extends StatelessWidget {
-  String email;
-  String password;
-
-  setEmail(String value) {
-    this.email = value;
-  }
-
-  setPassword(String value) {
-    this.password = value;
-  }
-
-  nullValidation(String value) {
-    if (value.length == 0) {
-      return 'Required field';
-    }
-  }
-
-  login() {
-    if (loginFormKey.currentState.validate()) {
-      loginFormKey.currentState.save();
-      FirebaseHelper.firebaseHelper.loginUser(email, password);
-    }
-  }
-
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -40,18 +17,23 @@ class LoginScreen extends StatelessWidget {
       ),
       body: Container(
         child: Form(
-          key: loginFormKey,
+          key: Provider.of<AuthProvider>(context, listen: false).loginKey,
           child: Column(
             children: [
               CustomTextField(
+                controller: Provider.of<AuthProvider>(context).emailController,
                 labelText: 'Email',
-                saveFunction: setEmail,
-                validationFunction: nullValidation,
+                validationFunction:
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .nullValidation,
               ),
               CustomTextField(
+                controller:
+                    Provider.of<AuthProvider>(context).passwordController,
                 labelText: 'Password',
-                saveFunction: setPassword,
-                validationFunction: nullValidation,
+                validationFunction:
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .nullValidation,
               ),
               TextButton(
                   onPressed: () {
@@ -61,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                   child: Text('Create new user')),
               ElevatedButton(
                   onPressed: () {
-                    login();
+                    Provider.of<AuthProvider>(context, listen: false).login();
                   },
                   child: Text('Login'))
             ],

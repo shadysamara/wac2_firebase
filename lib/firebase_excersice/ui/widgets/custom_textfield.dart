@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  Function saveFunction;
+  TextEditingController controller;
   Function validationFunction;
   String labelText;
-  CustomTextField({
-    @required this.saveFunction,
-    @required this.validationFunction,
-    @required this.labelText,
-  });
+  CustomTextField(
+      {@required this.validationFunction,
+      @required this.labelText,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,8 @@ class CustomTextField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: TextFormField(
+        controller: this.controller,
         validator: (v) => validationFunction(v),
-        onSaved: (v) => saveFunction(v),
         decoration: InputDecoration(
             labelText: labelText,
             border:

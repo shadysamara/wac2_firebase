@@ -6,11 +6,13 @@ class FirestorageHelper {
   FirestorageHelper._();
   static FirestorageHelper firestorageHelper = FirestorageHelper._();
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  Future<String> uploadImage(File file) async {
+  Future<String> uploadImage(File file, [String directoryName]) async {
     String imageName = file.path.split('/').last;
     // 1 make a refrence for uploading image
     try {
-      Reference reference = firebaseStorage.ref('images/imageName');
+      Reference reference = firebaseStorage.ref(directoryName == null
+          ? 'users/imageName'
+          : '$directoryName/imageName');
 
       //2 uplad the image
       await reference.putFile(file);

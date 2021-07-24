@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wac2_firebase/firebase_excersice/admin/admin_provider.dart';
+import 'package:wac2_firebase/firebase_excersice/providers/auth_provider.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/splach_page.dart';
 import 'package:wac2_firebase/firebase_excersice/utilities/routers.dart';
 import 'package:wac2_firebase/helpers/auth_helper.dart';
@@ -15,8 +18,22 @@ class MateriapAppIntializing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-        navigatorKey: AppRouter.router.navigatorKey, home: MyApp());
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) {
+            return AuthProvider();
+          },
+        ),
+        ChangeNotifierProvider<AdminProvider>(
+          create: (context) {
+            return AdminProvider();
+          },
+        )
+      ],
+      child: MaterialApp(
+          navigatorKey: AppRouter.router.navigatorKey, home: MyApp()),
+    );
   }
 }
 
