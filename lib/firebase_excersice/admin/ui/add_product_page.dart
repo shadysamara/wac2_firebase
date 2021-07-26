@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wac2_firebase/firebase_excersice/admin/admin_provider.dart';
-import 'package:wac2_firebase/firebase_excersice/admin/category_model.dart';
+import 'package:wac2_firebase/firebase_excersice/customer/customer_provider.dart';
+import 'package:wac2_firebase/firebase_excersice/models/category_model.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/widgets/custom_textfield.dart';
 
 class AddProductPage extends StatelessWidget {
@@ -59,7 +60,9 @@ class AddProductPage extends StatelessWidget {
                         onChanged: (e) {
                           provider.selectCategory(e);
                         },
-                        items: provider.categories.map((e) {
+                        items: Provider.of<CustomerProvider>(context)
+                            .categories
+                            .map((e) {
                           return DropdownMenuItem<CategoryModel>(
                             child: Text(e.name),
                             value: e,

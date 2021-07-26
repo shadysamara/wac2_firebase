@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:wac2_firebase/firebase_excersice/admin/admin_firestore_helper.dart';
-import 'package:wac2_firebase/firebase_excersice/admin/category_model.dart';
-import 'package:wac2_firebase/firebase_excersice/admin/product_model.dart';
+import 'package:wac2_firebase/firebase_excersice/models/category_model.dart';
+import 'package:wac2_firebase/firebase_excersice/models/product_model.dart';
 import 'package:wac2_firebase/firebase_excersice/admin/ui/add_category_page.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/firestorage_helper.dart';
 import 'package:wac2_firebase/firebase_excersice/providers/auth_provider.dart';
@@ -20,6 +20,7 @@ class AdminProvider extends ChangeNotifier {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productDescController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
+  TextEditingController sliderUrlController = TextEditingController();
 
   GlobalKey<FormState> productKey = GlobalKey<FormState>();
   GlobalKey<FormState> categoryKey = GlobalKey<FormState>();
@@ -76,22 +77,16 @@ class AdminProvider extends ChangeNotifier {
     productNameController.clear();
     productDescController.clear();
     productPriceController.clear();
+    sliderUrlController.clear();
     this.file = null;
     notifyListeners();
   }
 
-  getCategoryProducts(String id) async {
-    List<ProductModel> products =
-        await AdminFirestoreHelper.adminFirestoreHelper.getAllProducts(id);
-    this.products = products;
-    notifyListeners();
-  }
-
-  getCategories() async {
-    List<CategoryModel> categories =
-        await AdminFirestoreHelper.adminFirestoreHelper.getAllCategories();
-    this.categories = categories;
-    notifyListeners();
+  addSlider() async {
+    String imagePath = await uploadImage('sliders');
+    await AdminFirestoreHelper.adminFirestoreHelper
+        .addSlider(imagePath, sliderUrlController.text);
+    clearVariables();
   }
 
   Future<String> uploadImage(String path) async {

@@ -40,7 +40,7 @@ class ProductModel {
       productDescription: map['productDescription'],
       price: map['price'],
       imageUrl: map['imageUrl'],
-      createdTime: map['createdTime'],
+      // createdTime: map['createdTime'],
     );
   }
 }

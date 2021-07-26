@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wac2_firebase/firebase_excersice/customer/ui/home_page.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/auth_helper.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/firestorage_helper.dart';
 import 'package:wac2_firebase/firebase_excersice/helpers/firestore_helper.dart';
 import 'package:wac2_firebase/firebase_excersice/models/user_model.dart';
+import 'package:wac2_firebase/firebase_excersice/ui/home_page.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/login_page.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/profile_page.dart';
 import 'package:wac2_firebase/firebase_excersice/utilities/routers.dart';
@@ -79,7 +81,7 @@ class AuthProvider extends ChangeNotifier {
     if (currentUser != null) {
       this.userModel =
           await FirestoreHelper.firestoreHelper.getUser(currentUser.uid);
-      AppRouter.router.pushReplacementToNewWidget(ProfilePage());
+      AppRouter.router.pushReplacementToNewWidget(HomeScreen());
     } else {
       AppRouter.router.pushReplacementToNewWidget(LoginScreen());
     }

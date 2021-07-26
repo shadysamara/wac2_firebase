@@ -12,7 +12,7 @@ class FirestorageHelper {
     try {
       Reference reference = firebaseStorage.ref(directoryName == null
           ? 'users/imageName'
-          : '$directoryName/imageName');
+          : '$directoryName/$imageName');
 
       //2 uplad the image
       await reference.putFile(file);

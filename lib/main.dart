@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wac2_firebase/firebase_excersice/admin/admin_provider.dart';
+import 'package:wac2_firebase/firebase_excersice/customer/customer_provider.dart';
 import 'package:wac2_firebase/firebase_excersice/providers/auth_provider.dart';
 import 'package:wac2_firebase/firebase_excersice/ui/splach_page.dart';
 import 'package:wac2_firebase/firebase_excersice/utilities/routers.dart';
@@ -23,6 +24,11 @@ class MateriapAppIntializing extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) {
             return AuthProvider();
+          },
+        ),
+        ChangeNotifierProvider<CustomerProvider>(
+          create: (context) {
+            return CustomerProvider();
           },
         ),
         ChangeNotifierProvider<AdminProvider>(
